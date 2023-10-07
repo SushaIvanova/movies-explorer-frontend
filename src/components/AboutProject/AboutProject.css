@@ -1,0 +1,167 @@
+.about-project {
+  background-color: #202020;
+}
+
+.about-project__header {
+  margin: 0 0 70px;
+  padding-top: 110px;
+}
+
+.table {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: #FFF;
+  gap: 40px;
+}
+
+.table__column {
+  width: 550px;
+}
+
+.table__heading {
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: -0.8px;
+  padding: 0;
+  margin: 0 0 26px;
+}
+
+.table__text {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.chart {
+  display: grid;
+  grid-template-columns: 228px minmax(0, 1fr);
+  grid-template-rows: 36px 17px;
+  margin: 0;
+  padding: 110px 0 110px;
+  list-style: none;
+  width: 100%;
+  row-gap: 14px;
+}
+
+.chart__cell {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart__cell_purpose_weeks {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.chart__cell_purpose_part {
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.21;
+  color: #8B8B8B;
+}
+
+.chart__cell_color_green {
+  background-color: #3DDC84;
+  color: #000;
+}
+
+.chart__cell_color_grey {
+  background-color: #303030;
+  color: #FFF;
+}
+
+@media (max-width: 1050px) {
+  .table__column {
+    width: 380px
+  }
+}
+
+@media (max-width: 900px) {
+  .about-project__header {
+    padding-top: 90px;
+  }
+
+  .table {
+    gap: 30px;
+  }
+
+  .table__column {
+    width: 319px;
+  }
+
+  .table__heading {
+    margin-bottom: 22px;
+  }
+
+  .table__text {
+    font-size: 12px;
+  }
+
+  .chart {
+    grid-template-columns: 140px minmax(0, 1fr);
+    padding: 93px 0 90px;
+  }
+
+  .chart__cell_purpose_part {
+    font-weight: 400;
+  }
+}
+
+@media (max-width: 737px) {
+  .table__column {
+    width: 50%;
+  }
+}
+
+@media (max-width: 520px) {
+  .about-project__header {
+    margin: 0 0 60px;
+    padding-top: 70px;
+  }
+
+  .table {
+    flex-direction: row;
+    gap: 56px;
+  }
+  
+  .table__column {
+    width: 100%;
+  }
+
+  .table__heading {
+    margin: 0 0 16px;
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+
+  .table__text {
+    font-size: 11px;
+    line-height: 1.46;
+  }
+
+  .chart {
+    grid-template-columns: 100px minmax(0, 1fr);
+    grid-template-rows: 35px 13px;
+    padding: 60px 0 69px;
+    row-gap: 10px;
+  }
+
+  .chart__cell {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+}

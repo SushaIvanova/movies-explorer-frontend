@@ -1,0 +1,156 @@
+.header {
+  display: flex;
+}
+
+.header_theme_blue {
+  background-color: #073042;
+}
+
+.header_theme_black {
+  background-color: #202020;
+}
+
+.header__logo {
+  margin: 18px 0;
+}
+
+.header__navigation {
+  width: 100%;
+  display: flex;
+}
+
+.header__navigation_state_logged-out {
+  justify-content: flex-end;
+  gap: 30px;
+}
+
+.header__navigation_state_logged-in {
+  padding-left: 45px;
+  flex-wrap: wrap; 
+  justify-content: space-between;
+}
+
+.header__link {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33;
+  text-decoration: none;
+}
+
+.header__link_purpose_register {
+  margin: 29px 0;
+  color: #FFF;
+  text-align: right;
+}
+
+.header__link_purpose_register:hover {
+  opacity: 0.7;
+}
+
+.header__button {
+  margin: auto 0;
+  width: 76px;
+  height: 32px;
+  border: none;
+  border-radius: 3px;
+  background-color: #3DDC84;
+  padding: 0;
+}
+
+.header__button:hover {
+  opacity: 0.8;
+}
+
+.header__account-logo {
+  width: 100px;
+  height: 32px;
+}
+
+.header__link_purpose_login {
+  color: #000;
+}
+
+.header__link_state_logged-in {
+  margin: auto 0;
+  color: #FFF;
+  text-align: right;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.38;
+  text-decoration: none;
+}
+
+.header__link_state_logged-in:hover {
+  opacity: 0.7;
+}
+
+.header__films-link_active  {
+  font-weight: 500;
+}
+
+.header__links {
+  display: flex;
+  gap: 16px;
+}
+
+.header__link_purpose_account {
+  margin: auto 0;
+  display: flex;
+  gap: 7px;
+  text-decoration: none;
+}
+
+.header__link_purpose_account:hover {
+  opacity: 0.8;
+}
+
+.header__link-title {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 0.9;
+  align-self: center; 
+}
+
+.header__menu-button {
+  background-image: url(../../images/burger.svg);
+  background-size: cover;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  width: 44px;
+  height: 44px;
+  margin: auto 0;
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.header__menu-button:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 380px) {
+  .header__navigation_state_logged-out {
+    gap: 14px;
+  }
+
+  .header__button {
+    width: 54px;
+    height: 26px;
+
+  }
+
+  .header__link {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .header__menu-button {
+    height: 43px;
+    width: 40px;
+    right: 14px;
+  }
+}
