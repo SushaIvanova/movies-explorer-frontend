@@ -20,10 +20,10 @@ function AboutProject() {
       </ul>
       <div>
         <ul className="chart">
-          <p className="chart__cell chart__cell_purpose_weeks chart__cell_color_green">1 неделя</p>
-          <p className="chart__cell chart__cell_purpose_weeks chart__cell_color_grey">4 недели</p>
-          <p className="chart__cell chart__cell_purpose_part">Back-end</p>
-          <p className="chart__cell chart__cell_purpose_part">Front-end</p>
+          <li className="chart__cell chart__cell_purpose_weeks chart__cell_color_green">1 неделя</li>
+          <li className="chart__cell chart__cell_purpose_weeks chart__cell_color_grey">4 недели</li>
+          <li className="chart__cell chart__cell_purpose_part">Back-end</li>
+          <li className="chart__cell chart__cell_purpose_part">Front-end</li>
         </ul>
       </div>
     </section>

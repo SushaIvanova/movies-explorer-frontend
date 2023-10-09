@@ -37,11 +37,11 @@ function Profile({ name, email, onEditProfile, onSignOut, errorType }) {
   
 
   return (
-    <div className="profile section">
+    <main className="profile section">
       {/* <FormTitle  */}
       {/* <h2 className="profile__title"title={`Привет, ${name}!`} /> */}
-      <h2 className="profile__title">Привет, Виталий!</h2>
-      <form className="profile__info">
+      <h1 className="profile__title">Привет, Виталий!</h1>
+      <form className="profile__info" name="profile">
         <div className="profile__info-line">
           <p className="profile__input-title">Имя</p>
           {isEditing ? (
@@ -49,6 +49,7 @@ function Profile({ name, email, onEditProfile, onSignOut, errorType }) {
               type="text"
               value={newName}
               onChange={handleChange}
+              placeholder="Введите имя"
             />
           ) : (
           // <p className="profile__caption profile__caption_purpose_name">{name}</p>
@@ -63,6 +64,7 @@ function Profile({ name, email, onEditProfile, onSignOut, errorType }) {
               type="email"
               value={newEmail}
               onChange={handleChange}
+              placeholder="Введите email"
             />
           ) : (
           <p className="profile__caption profile__caption_purpose_email">pochta@yandex.ru</p>
@@ -88,7 +90,7 @@ function Profile({ name, email, onEditProfile, onSignOut, errorType }) {
       </form>
     
       
-    </div>
+    </main>
   )
 }
 

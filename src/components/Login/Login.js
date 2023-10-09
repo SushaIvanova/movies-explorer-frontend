@@ -11,7 +11,7 @@ function Login({ errorType, onLogin }) {
     onLogin(formValue);
   }
   return (
-   <div className="login section">
+   <main className="login section">
     <Form formName="login" name='login' title="Рады видеть!" question="Ещё не зарегистрированы?" link="/signup" linkName="Регистрация" buttonText="Войти" isDisabled={!isValid} isValid={isValid} errorType={errorType} >
       <div className="form__inputs-list form__inputs-list_place_login">
       <label className="form__label">E-mail</label>
@@ -23,6 +23,7 @@ function Login({ errorType, onLogin }) {
         value={formValue.email || ''} 
         required
         onChange={handleChange}
+        placeholder="Введите email"
       />
       <span className="form__error form__error_place_login form__error_purpose_email">{errorMessage.email || ''}</span>
       <label className="form__label">Пароль</label>
@@ -35,11 +36,12 @@ function Login({ errorType, onLogin }) {
         minLength="8"
         required
         onChange={handleChange}
+        placeholder="Введите пароль"
       />
       <span className="form__error form__error_place_login form__error_purpose_password">{errorMessage.password || ''}</span>
       </div>
     </Form>
-   </div>
+   </main>
   )
 }
 

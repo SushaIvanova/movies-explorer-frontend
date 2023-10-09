@@ -21,7 +21,7 @@ function Menu({ isOpen, onClose }) {
         </ul>
         <NavLink to='/profile' className="menu__account-link" >
           <p className="menu__link-title">Аккаунт</p>
-          <img className="menu__link-logo" src={blackIcon} alt="Иконка профиля"></img>
+          <div className="menu__link-logo"  alt="Иконка профиля"></div>
         </NavLink>
       </div>
      

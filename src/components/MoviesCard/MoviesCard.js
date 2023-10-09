@@ -16,7 +16,7 @@ function MoviesCard ({ card, onCardLike, onCardDelete }) {
 
   return (
     <div className="card">
-      <img className="card__video" alt="skd" src={card.link} />
+      <img className="card__video" alt="Заставка видео" src={card.link} />
       <div className="card__caption-container">
         <h2 className="card__caption-text" >{card.name}</h2>
           {location.pathname === '/movies' ? 
@@ -24,7 +24,7 @@ function MoviesCard ({ card, onCardLike, onCardDelete }) {
           <button type="button" className="card__button card__delete-button" aria-label="Удалить" onClick={handleDeleteClick}></button>
           }
       </div>
-      <div className="card__video-length">1ч 47м</div>
+      <p className="card__video-length">1ч 47м</p>
     </div>
   )
 }

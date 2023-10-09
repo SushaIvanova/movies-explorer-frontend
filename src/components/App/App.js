@@ -5,10 +5,6 @@ import Main from "../Main/Main";
 import Footer from '../Footer/Footer';
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
 import Menu from "../Menu/Menu";
-// import ImagePopup from "./ImagePopup";
-// import EditProfilePopup from "./EditProfilePopup";
-// import EditAvatarPopup from "./EditAvatarPopup";
-// import AddPlacePopup from "./AddPlacePopup";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
@@ -27,7 +23,7 @@ function App() {
 
   const location = useLocation();
 
-  const[loggedIn, setLoggedIn] = React.useState(true);
+  const[loggedIn, setLoggedIn] = React.useState(false);
   const[cards, setCards] = React.useState([]);
   const[isLoading, setIsLoading] = React.useState(false);
   const[isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -79,6 +75,10 @@ function App() {
     setIsMenuOpen(false);
   }
 
+  function handleCardLike(card) {
+
+  }
+
   return (
     <div className="App">
       <div className='page__container'>
@@ -88,7 +88,7 @@ function App() {
           <Route path="/signin" element={<Login errorType={errorType}/>}></Route>
           <Route path="/signup" element={<Register errorType={errorType}/>}></Route>
           <Route path="/profile" element={<Profile onEditProfile={handleEditProfile} errorType={errorType}/>}></Route>
-          <Route path="/movies" element={<Movies loggedIn={loggedIn} isLoading={isLoading} />}></Route>
+          <Route path="/movies" element={<Movies loggedIn={loggedIn} isLoading={isLoading} onCardLike={handleCardLike}/>}></Route>
           <Route path="/saved-movies" element={<SavedMovies loggedIn={loggedIn} />}></Route>
           <Route path="*" element={<NotFoundPage />}></Route>
         </Routes>

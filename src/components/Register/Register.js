@@ -13,7 +13,7 @@ function Register({ errorType, onRegister }) {
   }
 
   return (
-   <div className="register section">
+   <main className="register section">
     <Form formName="register" name='login' title="Добро пожаловать!" question="Уже зарегистрированы?" link="/signin" linkName="Войти" buttonText="Зарегистрироваться" isDisabled={!isValid} isValid={isValid} errorType={errorType} >
       <div className="form__inputs-list form__inputs-list_place_register">
       <label className="form__label">Имя</label>
@@ -27,6 +27,7 @@ function Register({ errorType, onRegister }) {
         maxLength="40"
         required
         onChange={handleChange}
+        placeholder="Введите имя"
       />
       <span className="form__error form__error_place_register form__error_purpose_name">{errorMessage.name || ''}</span>
       <label className="form__label">E-mail</label>
@@ -38,6 +39,7 @@ function Register({ errorType, onRegister }) {
         value={formValue.email || ''} 
         required
         onChange={handleChange}
+        placeholder="Введите email"
       />
       <span className="form__error form__error_place_register form__error_purpose_email">{errorMessage.email || ''}</span>
       <label className="form__label">Пароль</label>
@@ -50,11 +52,12 @@ function Register({ errorType, onRegister }) {
         minLength="8"
         required
         onChange={handleChange}
+        placeholder="Введите пароль"
       />
       <span className="form__error form__error_place_register form__error_purpose_password">{errorMessage.password || ''}</span>
       </div>
     </Form>
-   </div>
+   </main>
   )
 }
 

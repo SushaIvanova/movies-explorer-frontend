@@ -5,13 +5,13 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import AddMoviesButton from '../AddMoviesButton/AddMoviesButton';
 import './Movies.css';
 
-function Movies ({ loggedIn, isLoading }) {
+function Movies ({ loggedIn, isLoading, onCardLike }) {
   return (
     <div className="movies section section_size_narrow section_screen_narrow">
       <SearchForm></SearchForm>
       {isLoading ? <Preloader></Preloader> :
       <>
-        <MoviesCardList></MoviesCardList>
+        <MoviesCardList onCardLike={onCardLike}></MoviesCardList>
         <AddMoviesButton></AddMoviesButton>
       </>
       }

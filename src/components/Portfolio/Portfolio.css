@@ -55,7 +55,7 @@
   width: 270px;
   height: 327px;
   border-radius: 10px;
-  background-image: url("../../images/photo.svg");
+  background-image: url("../../images/photo.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -92,6 +92,7 @@
   justify-content: space-between;
   flex-direction: row;
   padding: 0;
+  position: relative;
 }
 
 .portfolio__link:hover {
@@ -104,10 +105,23 @@
   margin: 0;
 }
 
+
+
 .portfolio__link-name {
   margin: 0;
   padding: 0;
   line-height: 1.66;
+}
+
+.portfolio__link::after {
+  content: '↗';
+  margin: 0;
+  padding: 0;
+  line-height: 2;
+  position: absolute;
+  right: 0; 
+  top: 50%; 
+  transform: translateY(-50%); 
 }
 
 .portfolio__link-symbol {

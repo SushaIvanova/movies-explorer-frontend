@@ -3,7 +3,7 @@ import './FormTitle.css';
 
 function FormTitle({ title }) {
   return (
-    <h2 className="form__title">{title}</h2>
+    <h1 className="form__title">{title}</h1>
   )
 }
 

@@ -12,7 +12,7 @@ function InfoTooltip({ errorType }) {
   const routeErrorMessage = "404 Страница по указанному маршруту не найдена.";
 
   return (
-    <span className="tooltip__text" id="text">
+    <span className="form__tooltip-text" id="text">
       {
       errorType === 'auth' ? authErrorMessage :
       errorType === 'noToken' ? noTokenErrorMessage :

@@ -2,6 +2,7 @@
   box-sizing: border-box;
   background-color: #202020;
   display: none;
+  width: 520px;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -16,13 +17,16 @@
 .menu__container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 621px;
   align-items: center;
   padding: 159px 0 90px;
   min-height: 1024px;
 }
 
 .menu__links {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
   list-style: none;
   text-align: center;
   padding: 0;
@@ -30,10 +34,6 @@
   font-size: 18px;
   font-weight: 500;
   line-height: 1.2;
-}
-
-.menu__links-item {
-  padding-bottom: 28px;
 }
 
 .menu__link {
@@ -51,7 +51,7 @@
 
 .menu__button {
   background-image: url(../../images/close-button.svg);
-  background-size: cover;
+  background-size: auto;
   background-position: center;
   background-color: transparent;
   border: none;
@@ -60,8 +60,8 @@
   cursor: pointer;
   padding: 0;
   position: absolute;
-  top: 22px;
-  right: 22px;
+  top: 27px;
+  right: 27px;
 }
 
 .menu__button:hover {
@@ -69,10 +69,6 @@
 }
 
 .menu__account-link {
-  position: absolute;
-  right: 50%;
-  transform: translateX(50%);
-  bottom: 90px;
   display: flex;
   justify-content: center;
   gap: 7px;
@@ -81,6 +77,18 @@
   font-size: 13px;
   font-weight: 500;
   line-height: 0.9;
+}
+
+.menu__link-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 50px;
+  align-self: center;
+  background-image: url(../../images/account.svg);
+  background-position: center;
+  background-size:auto;
+  background-repeat: no-repeat;
+  background-color: #313131;
 }
 
 .menu__account-link:hover {
@@ -92,7 +100,15 @@
     padding: 0 10px 46px;
     width: 100%;
   }
-  .menu__links-item {
-    padding-bottom: 24px;
+  .menu__container {
+    padding: 144px 0 46px;
+    gap: 444px;
+  }
+  .menu__links {
+    gap: 24px;
+  }
+  .menu__button {
+    top: 18px;
+    right: 18px;
   }
 }

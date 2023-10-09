@@ -31,10 +31,11 @@
 }
 
 .header__link {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.33;
   text-decoration: none;
+}
+
+.header__link_purpose_main:hover {
+  opacity: 0.7;
 }
 
 .header__link_purpose_register {
@@ -55,15 +56,35 @@
   border-radius: 3px;
   background-color: #3DDC84;
   padding: 0;
+  box-sizing: border-box;
 }
 
 .header__button:hover {
   opacity: 0.8;
 }
 
-.header__account-logo {
-  width: 100px;
-  height: 32px;
+.header__link_state_logged-out {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.33;
+}
+
+.header__link-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 50px;
+  align-self: center;
+  background-image: url(../../images/account.svg);
+  background-position: center;
+  background-size:auto;
+  background-repeat: no-repeat;
+}
+
+.header__link-logo_color_blue {
+  background-color: #0F4157;
+}
+.header__link-logo_color_black {
+  background-color: #313131;
 }
 
 .header__link_purpose_login {
@@ -132,7 +153,7 @@
   opacity: 0.8;
 }
 
-@media (max-width: 380px) {
+@media (max-width: 520px) {
   .header__navigation_state_logged-out {
     gap: 14px;
   }

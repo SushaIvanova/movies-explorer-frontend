@@ -7,7 +7,7 @@ function Portfolio() {
       <h2 className="section__header portfolio__header">Студент</h2>
       <div className="student">
         <div className="student-info">
-          <p className="student-info__name">Виталий</p>
+          <h3 className="student-info__name">Виталий</h3>
           <p className="student-info__caption">Фронтенд-разработчик, 30 лет</p>
           <p className="student-info__story">Я родился и живу в Саратове, закончил факультет экономики СГУ. У меня есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. 
 С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.</p>
@@ -21,19 +21,19 @@ function Portfolio() {
           <li className="portfolio__links-item">
             <a className="portfolio__link" href="https://yp23.mesto.nomoredomainsicu.ru/" target="_blank" rel="noreferrer">              
                 <p className="portfolio__link-name">Статичный сайт</p>
-                <p className="portfolio__link-symbol">↗</p>              
+                {/* <p className="portfolio__link-symbol">↗</p>               */}
             </a>
           </li>
           <li className="portfolio__links-item">
             <a className="portfolio__link" href="https://sushaivanova.github.io/russian-travel/" target="_blank" rel="noreferrer">
                 <p className="portfolio__link-name">Адаптивный сайт</p>
-                <p className="portfolio__link-symbol">↗</p>              
+                {/* <p className="portfolio__link-symbol">↗</p>               */}
             </a>
           </li>
           <li className="portfolio__links-item">
             <a className="portfolio__link" href="https://github.com/SushaIvanova/how-to-learn.git" target="_blank" rel="noreferrer">              
                 <p className="portfolio__link-name">Одностраничное приложение</p>
-                <p className="portfolio__link-symbol">↗</p>              
+                {/* <p className="portfolio__link-symbol">↗</p>               */}
             </a>
           </li>
         </ul>

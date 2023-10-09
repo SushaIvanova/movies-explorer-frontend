@@ -25,6 +25,12 @@
   font-size: 13px;
   font-weight: 400;
   line-height: 1.2;
+  text-decoration: none;
+  color: #FFF;
+}
+
+.footer__content-item:hover {
+  opacity: 0.7;
 }
 
 .footer__platforms {
