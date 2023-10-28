@@ -20,7 +20,7 @@
 @media (max-width: 1147px) {
   .card-list__table {
     grid-template-columns: repeat(auto-fill, minmax(339px, 1fr));
-    grid-template-rows: repeat(auto-fill, minmax(262px, 1fr) );
+    grid-template-rows: repeat(4, minmax(262px, 1fr) );
     column-gap: 30px;
     row-gap: 30px;
     padding-bottom: 30px;

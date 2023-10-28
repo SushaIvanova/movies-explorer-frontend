@@ -9,62 +9,164 @@ import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
 import Movies from "../Movies/Movies";
-// import { api } from "../utils/api";
-// import { CurrentUserContext } from "../context/CurrentUserContexts";
-// import * as auth from '../utils/auth.js';
-// import {useNavigate} from 'react-router-dom';
-// import ProtectedRoute from './ProtectedRoute';
+import { CurrentUserContext } from "../../context/CurrentUserContexts";
+import {useNavigate} from 'react-router-dom';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import './App.css';
 import SavedMovies from "../SavedMovies/SavedMovies";
 import { useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
+import { mainApi } from "../../utils/MainApi";
+import { useFormWithValidation } from '../../hooks/useForm';
 
 function App() {
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const[loggedIn, setLoggedIn] = React.useState(false);
-  const[cards, setCards] = React.useState([]);
+  const[savedCards, setSavedCards] = React.useState([]); //сохраненные фильмы
   const[isLoading, setIsLoading] = React.useState(false);
   const[isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const[currentUser, setCurrentUser] = React.useState({});
+  const[isSuccess, setIsSuccess] = React.useState(false);
+  const[isEditing, setIsEditing] = React.useState(false);
 
   const isMobileScreen = useMediaQuery({ maxWidth: 768 });
 
-  const [errorType, setErrorType] = React.useState('noToken'); //будет устанавливаться при отлавливании ошибок
+  const[errorType, setErrorType] = React.useState(''); //будет устанавливаться при отлавливании ошибок
 
+  const[isError, setIsError] = React.useState(false);
 
-  // const [formValue, setFormValue] = React.useState({
-  //   name: '',
-  //   email: '',
-  //   password: ''
-  // })
+  useEffect(() => {
+    handleTokenCheck();
+  }, []);
 
-  // const handleChange = (e) => {
-  //   const {name, value} = e.target;
+  const handleTokenCheck = () => {
+    const token = localStorage.getItem('token');
+    console.log(token);
+    if (token){
+      mainApi.getContent(token)
+      .then((res) => {
+        setLoggedIn(true);
+        navigate('/', {replace: true});
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    } 
+  }
 
-  //   setFormValue({
-  //     ...formValue,
-  //     [name]: value
-  //   });
-  // }
+  React.useEffect(() => {
+    if(loggedIn) {
+      const token = localStorage.getItem('token');
+      Promise.all([mainApi.getUserInfo(token), mainApi.getSavedMovies(token)])
+        .then(([userInfo, movies]) => {
+          // console.log(userInfo);
+          setCurrentUser(userInfo);
+          setSavedCards(movies);
+        })
+        .catch((error) => console.log(`Ошибка ${error}`));
+      }
+  }, [loggedIn]);
 
-  // function handleRegister() {
-  //   const {name, email, password} = formValue;
-  //   // auth.register(password, email)
-  //   // .then((res) => {
-  //   //   setIsInfoTooltipPopupOpen(true);
-  //   //   setIsSignUpSuccess(true);
-  //   //   navigate('/sign-in', {replace: true});
-  //   // })
-  //   // .catch(err => {
-  //   //   setIsInfoTooltipPopupOpen(true);
-  //   //   setIsSignUpSuccess(false);
-  //   //   console.log(err);
-  //   // }); 
-  // }
+  function handleCardDelete(card) {
+    console.log(card);
+    const token = localStorage.getItem('token');
+    mainApi.deleteCard(card._id, token)
+    .then(() => {
+      setSavedCards((state) => state.filter((c) => c._id !== card._id));
+    })
+    .catch((error => console.log(error)))
+  }
 
-  const handleEditProfile = () => {
+  function handleSaveCard(data) {
+    console.log(data);
+    const isSaved = savedCards.some(item => item.movieId === data.id)
+    const token = localStorage.getItem('token');
+    if(isSaved) {
+      const cardToDelete = savedCards.find((card) => card.movieId === data.id)
+      handleCardDelete(cardToDelete);
+    } else {
+      mainApi.saveCard(data, token)
+      .then((newCard) => {
+        setSavedCards([newCard, ...savedCards])
+        console.log(newCard);
+      })
+      .catch((error) => console.log(error))
+    }  
+  }
 
+  const { formValue, handleChange, resetForm, errorMessage, isValid } = useFormWithValidation();
+
+  function handleRegister() {
+    const {name, email, password} = formValue;
+    mainApi.register(name, password, email)
+    .then((res) => {
+      navigate('/signin', {replace: true});
+    })
+    .catch(error => {
+      setIsError(true);
+      console.log(error);
+      if (error === 409) {
+        setErrorType('conflict');
+      } else {
+        setErrorType('register')
+      }      
+    }); 
+  }
+
+  const handleLogin = () => {
+    const {password, email} = formValue;
+    mainApi.authorize(password, email)
+    .then((res) => {
+      localStorage.setItem('token', res.token);
+      setLoggedIn(true);
+      console.log(loggedIn);
+      navigate('/movies', {replace: true}); 
+    })
+    .catch(err => {
+      setIsError(true);
+      console.log(err);
+      if (err === 400) {
+        setErrorType('auth');
+      } else {
+        setErrorType('noToken')
+      } 
+    }); 
+  }
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setIsError(false);
+  };
+
+  const handleEditProfile = (data) => {
+    const token = localStorage.getItem('token');
+    mainApi.editProfile(data, token)
+    .then((user) => {
+      setCurrentUser(user);
+      setIsSuccess(true);
+      setIsEditing(false);
+    })
+    .catch((error) => {
+      setIsError(true);
+      console.log(error);
+      if (error === 409) {
+        setErrorType('conflict');
+      } else if (error === 500) {
+        setErrorType('server');
+      } else {
+        setErrorType('edit');
+      }
+    })
+  }
+
+  const handleSignOut = () => {
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+    localStorage.clear();
+    navigate('/signin', {replace: true});
   }
 
   const handleOpenMenuClick = () => {
@@ -75,31 +177,83 @@ function App() {
     setIsMenuOpen(false);
   }
 
-  function handleCardLike(card) {
-
-  }
-
   return (
-    <div className="App">
-      <div className='page__container'>
-        {['/', '/movies', '/saved-movies', '/profile'].includes(location.pathname) ? <Header loggedIn={loggedIn} isMobileScreen={isMobileScreen} onOpenMenu={handleOpenMenuClick} ></Header> : null}
-        <Routes>
-          <Route path="/" element={<Main loggedIn={loggedIn} cards={cards} />}></Route>
-          <Route path="/signin" element={<Login errorType={errorType}/>}></Route>
-          <Route path="/signup" element={<Register errorType={errorType}/>}></Route>
-          <Route path="/profile" element={<Profile onEditProfile={handleEditProfile} errorType={errorType}/>}></Route>
-          <Route path="/movies" element={<Movies loggedIn={loggedIn} isLoading={isLoading} onCardLike={handleCardLike}/>}></Route>
-          <Route path="/saved-movies" element={<SavedMovies loggedIn={loggedIn} />}></Route>
-          <Route path="*" element={<NotFoundPage />}></Route>
-        </Routes>
-        {['/', '/movies', '/saved-movies'].includes(location.pathname) ? <Footer></Footer> : null}
-        <Menu
-          isOpen={isMenuOpen} 
-          onClose={handleCloseMenuClick} 
-        ></Menu>
-        
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="App">
+        <div className='page__container'>
+          {['/', '/movies', '/saved-movies', '/profile'].includes(location.pathname) ? <Header loggedIn={loggedIn} isMobileScreen={isMobileScreen} onOpenMenu={handleOpenMenuClick} ></Header> : null}
+          <Routes>
+            <Route path="/" element={<Main loggedIn={loggedIn} />}></Route>
+            <Route path="/signin"
+              element={<Login
+              errorType={errorType}
+              onLogin={handleLogin}
+              onChange={handleChange} 
+              formValue={formValue} 
+              errorMessage={errorMessage} 
+              isValid={isValid} 
+              isError={isError}
+              setIsError={setIsError}
+              />}>
+            </Route>
+            <Route path="/signup" 
+            element={<Register 
+              errorType={errorType} 
+              onRegister={handleRegister} 
+              onChange={handleChange} 
+              formValue={formValue} 
+              errorMessage={errorMessage} 
+              isValid={isValid} 
+              isError={isError}
+              setIsError={setIsError}
+              />}>
+            </Route>
+            <Route path="/profile" element={
+            <ProtectedRoute
+              element={Profile}
+              onEditProfile={handleEditProfile}
+              onSignOut={handleSignOut}
+              errorType={errorType}
+              isError={isError}
+              isSuccess={isSuccess}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              onEditClick={handleEditClick}
+              loggedIn={loggedIn}
+              setIsError={setIsError}
+              />}
+            />
+            <Route path="/movies" element={
+            <ProtectedRoute
+              element={Movies}
+              isError={isError}
+              onSave={handleSaveCard}
+              loggedIn={loggedIn}
+              isLoading={isLoading}
+              setIsError={setIsError}
+              savedCards={savedCards}
+            />}
+            />
+            <Route path="/saved-movies" element={
+            <ProtectedRoute
+              element={SavedMovies}
+              savedCards={savedCards}
+              onDelete={handleCardDelete}
+              isError={isError}
+              loggedIn={loggedIn}
+              />}
+            />
+            <Route path="*" element={<NotFoundPage />}></Route>
+          </Routes>
+          {['/', '/movies', '/saved-movies'].includes(location.pathname) ? <Footer></Footer> : null}
+          <Menu
+            isOpen={isMenuOpen} 
+            onClose={handleCloseMenuClick} 
+          />
+          
+        </div>
       </div>
-    </div>
+    </CurrentUserContext.Provider>
   );
 }
 

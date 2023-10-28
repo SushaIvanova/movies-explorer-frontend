@@ -1,15 +1,33 @@
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import { initialCards } from "../../utils/constants";
 import './MoviesCardList.css';
+import { useLocation } from "react-router-dom";
 
-function MoviesCardList({ onCardLike }) {
+function MoviesCardList({ cards, visibleCardsCount, savedCards, onSave, onDelete }) {
+  const location = useLocation();
+  
   return (
     <section className="card-list">
       <ul className="card-list__table">
-        {
-          initialCards.map((card) => <MoviesCard key={card._id} card={card} onCardLike={onCardLike} />)
-        }
+        {location.pathname === '/movies' ? (
+          cards.slice(0, visibleCardsCount).map((card) => (
+            <MoviesCard 
+              key={card.id}
+              card={card} 
+              onSave={onSave} 
+              savedCards={savedCards} 
+            />
+          ))
+        ) : (
+          savedCards.slice(0, visibleCardsCount).map((card) => (
+            <MoviesCard 
+              key={card._id} 
+              card={card} 
+              onCardDelete={onDelete}
+              savedCards={savedCards}
+            />
+          ))
+        )}
       </ul>
     </section>
   )

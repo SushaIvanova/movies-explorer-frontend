@@ -1,88 +1,99 @@
 import React from "react";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
-import { useFormWithValidation } from '../../hooks/useForm';
+import { CurrentUserContext } from "../../context/CurrentUserContexts";
+import { useFormWithValidation } from "../../hooks/useForm";
 import './Profile.css';
-// import { Link } from "react-router-dom";
-// import { Link, useLocation} from 'react-router-dom';
 
-function Profile({ name, email, onEditProfile, onSignOut, errorType }) {
-  const [isEditing, setIsEditing] = React.useState(false);
-  const [newName, setNewName] = React.useState(name);
-  const [newEmail, setNewEmail] = React.useState(email);
-  const [editError, setEditError] = React.useState(false);
+function Profile({ onEditProfile, onSignOut, errorType, isError, isSuccess, isEditing, setIsEditing, onEditClick, loggedIn, setIsError }) {
+  const currentUser = React.useContext(CurrentUserContext);
+  
+  const {handleChange, formValue, errorMessage, isValid, resetForm} = useFormWithValidation();
 
-  const { formValue, handleChange, resetForm, errorMessage, isValid } = useFormWithValidation();
+  const isDataChanged = formValue.name !== currentUser.name || formValue.email !== currentUser.email;
+
+  const handleInputChange = (e) => {
+    handleChange(e);
+    setIsError(false);
+  }
+
+  React.useEffect(() => {
+    resetForm({
+      name: currentUser.name,
+      email: currentUser.email
+    });
+    setIsError(false);
+  }, [resetForm, currentUser, isEditing, setIsError])
 
   function handleSubmit(e) {
     e.preventDefault();
-    onEditProfile(formValue);
+    onEditProfile({
+      name: formValue.name,
+      email: formValue.email,
+    });
   }
 
-  const handleEditClick = () => {
-    setIsEditing(true);
-  };
-
-  const handleSaveClick = () => {
-    setIsEditing(false);
-  };
-
-  // const handleNameChange = (e) => {
-  //   setNewName(e.target.value);
-  // }
-
-  // const handleEmailChange = (e) => {
-  //   setNewEmail(e.target.value);
-  // }
-
+  console.log(currentUser);
   
 
   return (
-    <main className="profile section">
-      {/* <FormTitle  */}
-      {/* <h2 className="profile__title"title={`Привет, ${name}!`} /> */}
-      <h1 className="profile__title">Привет, Виталий!</h1>
-      <form className="profile__info" name="profile">
+    <main className="profile section" >
+      <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
+      <form className="profile__info" name="profile" onSubmit={handleSubmit}>
         <div className="profile__info-line">
+        <div className="profile__input-group">
           <p className="profile__input-title">Имя</p>
+          
           {isEditing ? (
             <input className="profile__input profile__input_purpose_name"
               type="text"
-              value={newName}
-              onChange={handleChange}
+              name="name"
+              id='name'
+              value={formValue.name || ''}
+              onChange={handleInputChange}
               placeholder="Введите имя"
+              minLength='2'
+              maxLength='20'
+              required
             />
           ) : (
-          // <p className="profile__caption profile__caption_purpose_name">{name}</p>
-          <p className="profile__caption profile__caption_purpose_name">Виталий</p>
-
+          <p className="profile__caption profile__caption_purpose_name">{currentUser.name}</p>
           )}
           </div>
+          <span className="profile__input-error">{errorMessage.name || ''}</span>
+          </div> 
         <div className="profile__info-line">
+        <div className="profile__input-group">
           <p className="profile__input-title">E-mail</p>
           {isEditing ? (
             <input className="profile__input profile__input_purpose_email"
               type="email"
-              value={newEmail}
-              onChange={handleChange}
+              name="email"
+              id='email'
+              value={formValue.email || ''}
+              onChange={handleInputChange}
               placeholder="Введите email"
+              required
             />
           ) : (
-          <p className="profile__caption profile__caption_purpose_email">pochta@yandex.ru</p>
-          // <p className="profile__caption profile__caption_purpose_email">{email}</p>
+          <p className="profile__caption profile__caption_purpose_email">{currentUser.email}</p>
           )}
+          </div>
+          <span className="profile__input-error">{errorMessage.email || ''}</span>
           </div>
           {isEditing ? (
         <>
-        <InfoTooltip
-          errorType={errorType}
-        />
-        <button onClick={handleSaveClick} className='profile__save-button' disabled={!isValid}>
+        {isError && <InfoTooltip
+          errorType={isError ? errorType : ''}
+        />}
+        
+        <button className='profile__save-button' disabled={!isValid || isError || !isDataChanged}>
           Сохранить
         </button>
         </>
       ) : (
       <>
-        <button onClick={handleEditClick} className="profile__edit-button">Редактировать</button>
+        {!isError && isSuccess && <p className="profile__success-tooltip">Профиль успешно обновлен!</p>}
+        <button onClick={onEditClick} className="profile__edit-button">Редактировать</button>
         <button onClick={onSignOut} className="profile__sign-out-button">Выйти из аккаунта</button>
       </>
       
