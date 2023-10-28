@@ -55,8 +55,7 @@ class MainApi {
       headers: {
         "Content-Type": "application/json",
         "Authorization" : `Bearer ${token}`
-      }
-      
+      },
     })
     .then(res => res.json())
   }

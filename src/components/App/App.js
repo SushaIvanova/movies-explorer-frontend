@@ -243,7 +243,7 @@ function App() {
               loggedIn={loggedIn}
               />}
             />
-            <Route path="*" element={<NotFoundPage />}></Route>
+            <Route path="" element={<NotFoundPage />}></Route>
           </Routes>
           {['/', '/movies', '/saved-movies'].includes(location.pathname) ? <Footer></Footer> : null}
           <Menu
