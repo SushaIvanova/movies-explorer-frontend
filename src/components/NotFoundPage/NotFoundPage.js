@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './NotFoundPage.css';
+// import { Navigate } from "react-router-dom";
 
 function NotFoundPage () {
   return (

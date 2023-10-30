@@ -1,6 +1,7 @@
 import React from "react";
 import Form from "../Form/Form";
 import './Register.css';
+import { emailRegex } from "../../utils/constants";
 
 function Register({ errorType, onRegister, onChange, formValue, errorMessage, isValid, isError, setIsError }) {
 
@@ -55,6 +56,7 @@ function Register({ errorType, onRegister, onChange, formValue, errorMessage, is
           required
           onChange={handleInputChange}
           placeholder="Введите email"
+          pattern={emailRegex}
         />
         <span className="form__error form__error_place_register form__error_purpose_email">{errorMessage.email || ''}</span>
         <label className="form__label">Пароль</label>

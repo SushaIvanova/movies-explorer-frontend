@@ -120,8 +120,8 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  // baseUrl: 'http://localhost:3002',
-  baseUrl: 'https://yp23.movie.nomoredomainsicu.ru',
+  baseUrl: 'http://localhost:3002',
+  // baseUrl: 'https://yp23.movie.nomoredomainsicu.ru',
 });
 
 export {mainApi};

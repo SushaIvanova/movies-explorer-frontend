@@ -139,7 +139,8 @@ function Movies ({ isError, onSave, loggedIn, setIsError, savedCards }) {
   //переключение 
   function handleShortMoviesChange() {
     setIsShortMovie(!isShortMovie);
-    filterMovies(isShortMovie, searchQuery, cards); 
+    localStorage.setItem('isShort', JSON.stringify(!isShortMovie));
+    filterMovies(); 
   }
   
   return (

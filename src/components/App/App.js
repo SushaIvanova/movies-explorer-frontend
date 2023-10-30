@@ -18,13 +18,15 @@ import { useLocation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { mainApi } from "../../utils/MainApi";
 import { useFormWithValidation } from '../../hooks/useForm';
+import { Navigate } from "react-router-dom";
+
 
 function App() {
 
   const location = useLocation();
   const navigate = useNavigate();
 
-  const[loggedIn, setLoggedIn] = React.useState(false);
+  // const[loggedIn, setLoggedIn] = React.useState(false);
   const[savedCards, setSavedCards] = React.useState([]); //сохраненные фильмы
   const[isLoading, setIsLoading] = React.useState(false);
   const[isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -38,8 +40,12 @@ function App() {
 
   const[isError, setIsError] = React.useState(false);
 
+  const initialLoggedIn = !!localStorage.getItem('token');
+  const [loggedIn, setLoggedIn] = React.useState(initialLoggedIn);
+
   useEffect(() => {
     handleTokenCheck();
+    console.log(loggedIn);
   }, []);
 
   const handleTokenCheck = () => {
@@ -49,7 +55,7 @@ function App() {
       mainApi.getContent(token)
       .then((res) => {
         setLoggedIn(true);
-        navigate('/', {replace: true});
+        // navigate('/', {replace: true});
       })
       .catch(err => {
         console.log(err);
@@ -62,7 +68,6 @@ function App() {
       const token = localStorage.getItem('token');
       Promise.all([mainApi.getUserInfo(token), mainApi.getSavedMovies(token)])
         .then(([userInfo, movies]) => {
-          // console.log(userInfo);
           setCurrentUser(userInfo);
           setSavedCards(movies);
         })
@@ -97,13 +102,13 @@ function App() {
     }  
   }
 
-  const { formValue, handleChange, resetForm, errorMessage, isValid } = useFormWithValidation();
+  const { formValue, handleChange, resetForm, errorMessage, isValid, isEmailValid } = useFormWithValidation();
 
   function handleRegister() {
     const {name, email, password} = formValue;
     mainApi.register(name, password, email)
     .then((res) => {
-      navigate('/signin', {replace: true});
+      handleLogin();
     })
     .catch(error => {
       setIsError(true);
@@ -166,7 +171,7 @@ function App() {
     localStorage.removeItem('token');
     setLoggedIn(false);
     localStorage.clear();
-    navigate('/signin', {replace: true});
+    navigate('/', {replace: true});
   }
 
   const handleOpenMenuClick = () => {
@@ -183,7 +188,12 @@ function App() {
         <div className='page__container'>
           {['/', '/movies', '/saved-movies', '/profile'].includes(location.pathname) ? <Header loggedIn={loggedIn} isMobileScreen={isMobileScreen} onOpenMenu={handleOpenMenuClick} ></Header> : null}
           <Routes>
-            <Route path="/" element={<Main loggedIn={loggedIn} />}></Route>
+            <Route path="/" 
+              element={<Main loggedIn={loggedIn} />}
+            />
+            <Route path="*" 
+              element={<NotFoundPage />}
+            />
             <Route path="/signin"
               element={<Login
               errorType={errorType}
@@ -197,7 +207,7 @@ function App() {
               />}>
             </Route>
             <Route path="/signup" 
-            element={<Register 
+              element={<Register 
               errorType={errorType} 
               onRegister={handleRegister} 
               onChange={handleChange} 
@@ -206,6 +216,7 @@ function App() {
               isValid={isValid} 
               isError={isError}
               setIsError={setIsError}
+              isEmailValid={isEmailValid}
               />}>
             </Route>
             <Route path="/profile" element={
@@ -243,7 +254,6 @@ function App() {
               loggedIn={loggedIn}
               />}
             />
-            <Route path="" element={<NotFoundPage />}></Route>
           </Routes>
           {['/', '/movies', '/saved-movies'].includes(location.pathname) ? <Footer></Footer> : null}
           <Menu
