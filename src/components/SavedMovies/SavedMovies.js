@@ -1,20 +1,18 @@
 import React from "react";
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
-import { useMediaQuery } from 'react-responsive';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-// import AddMoviesButton from "../AddMoviesButton/AddMoviesButton";
+import { useScreen } from "../../hooks/useScreen";
 import './SavedMovies.css';
 
-function SavedMovies ({ savedCards, onDelete, isError }) {
+function SavedMovies ({ savedCards, onDelete, isError, isSending }) {
   const [searchQuery, setSearchQuery] =  React.useState(""); //состояние для хранения запроса пользователя
   const [filteredCards, setFilteredCards] = React.useState([]); //состояние для хранения результата фильтрации фильмов
   const [isLoading, setIsLoading] = React.useState(false);
   const [isShortMovie, setIsShortMovie] = React.useState(false);
   const [visibleCardsCount, setVisibleCardsCount] = React.useState(0);
-  const isDesktop = useMediaQuery({ minWidth: 1149 });
-  const isTablet = useMediaQuery({ minWidth: 629, maxWidth: 1148 });
-  const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 628 });
+
+  const { isDesktop, isTablet, isMobile} = useScreen();
 
   //отображение карточек
 
@@ -97,6 +95,7 @@ function SavedMovies ({ savedCards, onDelete, isError }) {
         value={searchQuery} 
         checked={isShortMovie} 
         onCheckboxChange={handleShortMoviesChange}
+        isSending={isSending}
       />
       {isLoading ?
         <Preloader /> :

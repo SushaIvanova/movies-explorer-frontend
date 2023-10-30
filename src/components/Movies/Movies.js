@@ -2,9 +2,9 @@ import React, { useCallback } from "react";
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
-import { useMediaQuery } from 'react-responsive';
 import { moviesApi } from "../../utils/MoviesApi";
 import AddMoviesButton from '../AddMoviesButton/AddMoviesButton';
+import { useScreen } from "../../hooks/useScreen";
 
 import './Movies.css';
 
@@ -17,12 +17,9 @@ function Movies ({ isError, onSave, loggedIn, setIsError, savedCards }) {
   const [isLoading, setIsLoading] = React.useState(false);
   const [isInputError, setIsInputError] = React.useState(false);
   const [visibleCardsCount, setVisibleCardsCount] = React.useState(0);
+  const [isSending, setIsSending] = React.useState(false);
 
-  const isDesktop = useMediaQuery({ minWidth: 1149 });
-  const isTablet = useMediaQuery({ minWidth: 629, maxWidth: 1148 });
-  const isMobile = useMediaQuery({ minWidth: 320, maxWidth: 628 });
-  const desktopAdd = 3;
-  const tabletOrMobileAdd = 2;
+  const { isDesktop, isTablet, isMobile, desktopAdd, tabletOrMobileAdd } = useScreen();
 
   //отображение карточек
 
@@ -90,6 +87,7 @@ function Movies ({ isError, onSave, loggedIn, setIsError, savedCards }) {
 
   //поиск по фильмам
   const handleMoviesSearch = () => {
+    setIsSending(true);
     setIsLoading(true);
     moviesApi.getMovies()
     .then((cards) => {
@@ -99,10 +97,12 @@ function Movies ({ isError, onSave, loggedIn, setIsError, savedCards }) {
       localStorage.setItem('search', JSON.stringify(searchQuery));
       localStorage.setItem('isShort', JSON.stringify(isShortMovie));
       localStorage.setItem('movies', JSON.stringify(cards));
+      setIsSending(false);
     })
     .catch((error) => {
       setIsError(true);
       console.log(error)
+      setIsSending(false);
     })
     .finally(() => {
       setIsLoading(false);
@@ -152,6 +152,7 @@ function Movies ({ isError, onSave, loggedIn, setIsError, savedCards }) {
         checked={isShortMovie} 
         onCheckboxChange={handleShortMoviesChange}
         isError={isInputError}
+        isSending={isSending}
          />
       {isLoading ? 
        <Preloader /> :

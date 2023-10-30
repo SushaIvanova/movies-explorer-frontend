@@ -3,7 +3,7 @@ import Form from "../Form/Form";
 import { emailRegex } from "../../utils/constants";
 import './Login.css';
 
-function Login({ errorType, onLogin, onChange, formValue, errorMessage, isValid, isError, setIsError }) {
+function Login({ errorType, onLogin, onChange, formValue, errorMessage, isValid, isError, setIsError, isSending }) {
 
   const handleInputChange = (e) => {
     onChange(e);
@@ -25,7 +25,7 @@ function Login({ errorType, onLogin, onChange, formValue, errorMessage, isValid,
       link="/signup" 
       linkName="Регистрация" 
       buttonText="Войти" 
-      isDisabled={!isValid} 
+      isDisabled={!isValid || isSending} 
       isValid={isValid} 
       errorType={errorType} 
       onSubmit={handleSubmit} 

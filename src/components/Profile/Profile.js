@@ -4,7 +4,7 @@ import { CurrentUserContext } from "../../context/CurrentUserContexts";
 import { useFormWithValidation } from "../../hooks/useForm";
 import './Profile.css';
 
-function Profile({ onEditProfile, onSignOut, errorType, isError, isSuccess, isEditing, setIsEditing, onEditClick, loggedIn, setIsError }) {
+function Profile({ onEditProfile, onSignOut, errorType, isError, isSuccess, isEditing, setIsEditing, onEditClick, loggedIn, setIsError, isSending }) {
   const currentUser = React.useContext(CurrentUserContext);
   
   const {handleChange, formValue, errorMessage, isValid, resetForm} = useFormWithValidation();
@@ -38,7 +38,7 @@ function Profile({ onEditProfile, onSignOut, errorType, isError, isSuccess, isEd
   return (
     <main className="profile section" >
       <h1 className="profile__title">{`Привет, ${currentUser.name}!`}</h1>
-      <form className="profile__info" name="profile" onSubmit={handleSubmit}>
+      <form className="profile__info" name="profile" onSubmit={handleSubmit} disabled={isSending} >
         <div className="profile__info-line">
         <div className="profile__input-group">
           <p className="profile__input-title">Имя</p>
@@ -86,7 +86,7 @@ function Profile({ onEditProfile, onSignOut, errorType, isError, isSuccess, isEd
           errorType={isError ? errorType : ''}
         />}
         
-        <button className='profile__save-button' disabled={!isValid || isError || !isDataChanged}>
+        <button className='profile__save-button' disabled={!isValid || isError || !isDataChanged || isSending}>
           Сохранить
         </button>
         </>

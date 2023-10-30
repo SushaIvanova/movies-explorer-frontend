@@ -3,7 +3,7 @@ import Form from "../Form/Form";
 import './Register.css';
 import { emailRegex } from "../../utils/constants";
 
-function Register({ errorType, onRegister, onChange, formValue, errorMessage, isValid, isError, setIsError }) {
+function Register({ errorType, onRegister, onChange, formValue, errorMessage, isValid, isError, setIsError, isSending }) {
 
   const handleInputChange = (e) => {
     onChange(e);
@@ -25,7 +25,7 @@ function Register({ errorType, onRegister, onChange, formValue, errorMessage, is
       link="/signin" 
       linkName="Войти" 
       buttonText="Зарегистрироваться" 
-      isDisabled={!isValid} 
+      isDisabled={!isValid || isSending} 
       isValid={isValid} 
       errorType={errorType} 
       onSubmit={handleSubmit} 

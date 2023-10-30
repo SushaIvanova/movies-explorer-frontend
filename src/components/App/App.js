@@ -33,6 +33,7 @@ function App() {
   const[currentUser, setCurrentUser] = React.useState({});
   const[isSuccess, setIsSuccess] = React.useState(false);
   const[isEditing, setIsEditing] = React.useState(false);
+  const[isSending, setIsSending] = React.useState(false);
 
   const isMobileScreen = useMediaQuery({ maxWidth: 768 });
 
@@ -122,6 +123,7 @@ function App() {
   }
 
   const handleLogin = () => {
+setIsSending(true);
     const {password, email} = formValue;
     mainApi.authorize(password, email)
     .then((res) => {
@@ -129,6 +131,7 @@ function App() {
       setLoggedIn(true);
       console.log(loggedIn);
       navigate('/movies', {replace: true}); 
+      setIsSending(false);
     })
     .catch(err => {
       setIsError(true);
@@ -138,6 +141,7 @@ function App() {
       } else {
         setErrorType('noToken')
       } 
+      setIsSending(false);
     }); 
   }
 
@@ -147,14 +151,17 @@ function App() {
   };
 
   const handleEditProfile = (data) => {
+    setIsSending(true);
     const token = localStorage.getItem('token');
     mainApi.editProfile(data, token)
     .then((user) => {
       setCurrentUser(user);
       setIsSuccess(true);
       setIsEditing(false);
+      setIsSending(false);
     })
     .catch((error) => {
+      setIsSending(false);
       setIsError(true);
       console.log(error);
       if (error === 409) {
@@ -204,6 +211,7 @@ function App() {
               isValid={isValid} 
               isError={isError}
               setIsError={setIsError}
+              isSending={isSending}
               />}>
             </Route>
             <Route path="/signup" 
@@ -217,6 +225,7 @@ function App() {
               isError={isError}
               setIsError={setIsError}
               isEmailValid={isEmailValid}
+              isSending={isSending}
               />}>
             </Route>
             <Route path="/profile" element={
@@ -232,6 +241,7 @@ function App() {
               onEditClick={handleEditClick}
               loggedIn={loggedIn}
               setIsError={setIsError}
+              isSending={isSending}
               />}
             />
             <Route path="/movies" element={
@@ -243,6 +253,7 @@ function App() {
               isLoading={isLoading}
               setIsError={setIsError}
               savedCards={savedCards}
+              setIsSending={setIsSending}
             />}
             />
             <Route path="/saved-movies" element={
@@ -252,6 +263,7 @@ function App() {
               onDelete={handleCardDelete}
               isError={isError}
               loggedIn={loggedIn}
+              isSending={isSending}
               />}
             />
           </Routes>
