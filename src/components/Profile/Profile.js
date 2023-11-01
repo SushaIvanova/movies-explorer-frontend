@@ -3,8 +3,9 @@ import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import { CurrentUserContext } from "../../context/CurrentUserContexts";
 import { useFormWithValidation } from "../../hooks/useForm";
 import './Profile.css';
+import { emailRegex } from "../../utils/constants";
 
-function Profile({ onEditProfile, onSignOut, errorType, isError, isSuccess, isEditing, setIsEditing, onEditClick, loggedIn, setIsError, isSending }) {
+function Profile({ onEditProfile, onSignOut, errorType, isError, isSuccess, isEditing, onEditClick, loggedIn, setIsError, isSending }) {
   const currentUser = React.useContext(CurrentUserContext);
   
   const {handleChange, formValue, errorMessage, isValid, resetForm} = useFormWithValidation();
@@ -71,6 +72,7 @@ function Profile({ onEditProfile, onSignOut, errorType, isError, isSuccess, isEd
               id='email'
               value={formValue.email || ''}
               onChange={handleInputChange}
+              pattern={emailRegex}
               placeholder="Введите email"
               required
             />

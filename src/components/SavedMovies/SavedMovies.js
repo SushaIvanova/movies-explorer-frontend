@@ -5,7 +5,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { useScreen } from "../../hooks/useScreen";
 import './SavedMovies.css';
 
-function SavedMovies ({ savedCards, onDelete, isError, isSending }) {
+function SavedMovies ({ savedCards, onDelete, isError }) {
   const [searchQuery, setSearchQuery] =  React.useState(""); //состояние для хранения запроса пользователя
   const [filteredCards, setFilteredCards] = React.useState([]); //состояние для хранения результата фильтрации фильмов
   const [isLoading, setIsLoading] = React.useState(false);
@@ -95,7 +95,6 @@ function SavedMovies ({ savedCards, onDelete, isError, isSending }) {
         value={searchQuery} 
         checked={isShortMovie} 
         onCheckboxChange={handleShortMoviesChange}
-        isSending={isSending}
       />
       {isLoading ?
         <Preloader /> :

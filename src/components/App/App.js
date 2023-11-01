@@ -40,6 +40,8 @@ function App() {
   const[errorType, setErrorType] = React.useState(''); //будет устанавливаться при отлавливании ошибок
 
   const[isError, setIsError] = React.useState(false);
+  const[isRegisterError, setIsRegisterError] = React.useState(false);
+  const[isLoginError, setIsLoginError] = React.useState(false);
 
   const initialLoggedIn = !!localStorage.getItem('token');
   const [loggedIn, setLoggedIn] = React.useState(initialLoggedIn);
@@ -112,7 +114,7 @@ function App() {
       handleLogin();
     })
     .catch(error => {
-      setIsError(true);
+      setIsRegisterError(true);
       console.log(error);
       if (error === 409) {
         setErrorType('conflict');
@@ -123,7 +125,7 @@ function App() {
   }
 
   const handleLogin = () => {
-setIsSending(true);
+    setIsSending(true);
     const {password, email} = formValue;
     mainApi.authorize(password, email)
     .then((res) => {
@@ -134,7 +136,7 @@ setIsSending(true);
       setIsSending(false);
     })
     .catch(err => {
-      setIsError(true);
+      setIsLoginError(true);
       console.log(err);
       if (err === 400) {
         setErrorType('auth');
@@ -202,31 +204,39 @@ setIsSending(true);
               element={<NotFoundPage />}
             />
             <Route path="/signin"
-              element={<Login
-              errorType={errorType}
-              onLogin={handleLogin}
-              onChange={handleChange} 
-              formValue={formValue} 
-              errorMessage={errorMessage} 
-              isValid={isValid} 
-              isError={isError}
-              setIsError={setIsError}
-              isSending={isSending}
-              />}>
+              element={loggedIn ? (
+              <Navigate to='/' replace />
+            ) : ( 
+              <Login
+                errorType={errorType}
+                onLogin={handleLogin}
+                onChange={handleChange} 
+                formValue={formValue} 
+                errorMessage={errorMessage} 
+                isValid={isValid} 
+                isError={isLoginError}
+                setIsError={setIsLoginError}
+                isSending={isSending}
+              />
+            )}>
             </Route>
             <Route path="/signup" 
-              element={<Register 
-              errorType={errorType} 
-              onRegister={handleRegister} 
-              onChange={handleChange} 
-              formValue={formValue} 
-              errorMessage={errorMessage} 
-              isValid={isValid} 
-              isError={isError}
-              setIsError={setIsError}
-              isEmailValid={isEmailValid}
-              isSending={isSending}
-              />}>
+              element={loggedIn ? (
+                <Navigate to='/' replace />
+              ) : ( 
+              <Register 
+                errorType={errorType} 
+                onRegister={handleRegister} 
+                onChange={handleChange} 
+                formValue={formValue} 
+                errorMessage={errorMessage} 
+                isValid={isValid} 
+                isError={isRegisterError}
+                setIsError={setIsRegisterError}
+                isEmailValid={isEmailValid}
+                isSending={isSending}
+              />
+            )}>
             </Route>
             <Route path="/profile" element={
             <ProtectedRoute
@@ -237,7 +247,6 @@ setIsSending(true);
               isError={isError}
               isSuccess={isSuccess}
               isEditing={isEditing}
-              setIsEditing={setIsEditing}
               onEditClick={handleEditClick}
               loggedIn={loggedIn}
               setIsError={setIsError}
@@ -253,7 +262,6 @@ setIsSending(true);
               isLoading={isLoading}
               setIsError={setIsError}
               savedCards={savedCards}
-              setIsSending={setIsSending}
             />}
             />
             <Route path="/saved-movies" element={
@@ -263,7 +271,6 @@ setIsSending(true);
               onDelete={handleCardDelete}
               isError={isError}
               loggedIn={loggedIn}
-              isSending={isSending}
               />}
             />
           </Routes>
