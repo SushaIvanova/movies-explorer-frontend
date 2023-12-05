@@ -21,19 +21,16 @@ function Portfolio() {
           <li className="portfolio__links-item">
             <a className="portfolio__link" href="https://yp23.mesto.nomoredomainsicu.ru/" target="_blank" rel="noreferrer">              
                 <p className="portfolio__link-name">Статичный сайт</p>
-                {/* <p className="portfolio__link-symbol">↗</p>               */}
             </a>
           </li>
           <li className="portfolio__links-item">
             <a className="portfolio__link" href="https://sushaivanova.github.io/russian-travel/" target="_blank" rel="noreferrer">
                 <p className="portfolio__link-name">Адаптивный сайт</p>
-                {/* <p className="portfolio__link-symbol">↗</p>               */}
             </a>
           </li>
           <li className="portfolio__links-item">
             <a className="portfolio__link" href="https://github.com/SushaIvanova/how-to-learn.git" target="_blank" rel="noreferrer">              
                 <p className="portfolio__link-name">Одностраничное приложение</p>
-                {/* <p className="portfolio__link-symbol">↗</p>               */}
             </a>
           </li>
         </ul>
