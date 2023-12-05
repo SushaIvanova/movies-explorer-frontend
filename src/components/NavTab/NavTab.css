@@ -1,0 +1,32 @@
+.navigation {
+  background-color: #272727;
+}
+
+.navigation__list {
+  margin: 0 auto;
+  padding: 25px 0;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+
+.navigation__link {
+  color: #FFF;
+}
+
+.navigation__link:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 496px) {
+  .navigation__list {
+    gap: 24px;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+}

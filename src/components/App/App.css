@@ -1,0 +1,57 @@
+.page__container {
+  font-family: 'Inter', Arial, sans-serif;
+  max-width: 1280px;
+  min-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.section {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0 70px;
+  width: 100%;
+}
+
+.section__header {
+  border-bottom: 1px solid #dadada;
+  color: #fff;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.88px;
+  padding-bottom: 23px;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 0 50px;
+  }
+}
+
+@media (max-width: 890px) {
+  
+  .section_size_narrow {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 550px) {
+  .section {
+    padding: 0 14px;
+  }
+  
+  .section_screen_narrow {
+    padding: 0 10px;
+  }
+
+  .section_screen_wide {
+    padding: 0 18px;
+  }
+
+  .section__header {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    padding-bottom: 28px;
+  }
+}
