@@ -8,7 +8,8 @@ export function useFormWithValidation() {
   const [formValue, setFormValue] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    search: ''
   })
 
   const[isValid, setIsValid] = useState(false);
@@ -42,5 +43,5 @@ export function useFormWithValidation() {
     [setFormValue, setErrorMessage, setIsValid]
   )
 
-  return { formValue, handleChange, resetForm, errorMessage, isValid };
+  return { formValue, handleChange, resetForm, errorMessage, isValid, setFormValue };
 }
